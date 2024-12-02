@@ -25,6 +25,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   /// This function will be called when the expansion of a tile is changed.
   final OnExpansionChanged? onExpansionChanged;
   final Color? backgroundColor;
+  final BoxDecoration? innerDecoration;
   @override
   final List<DragAndDropItem>? children;
   final Widget? contentsWhenEmpty;
@@ -54,6 +55,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     this.leading,
     this.initiallyExpanded = false,
     this.backgroundColor,
+    this.innerDecoration,
     this.onExpansionChanged,
     this.contentsWhenEmpty,
     this.lastTarget,
@@ -70,18 +72,24 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     var contents = _generateDragAndDropListInnerContents(params);
 
     Widget expandable = ProgrammaticExpansionTile(
-      title: title,
-      listKey: listKey,
-      subtitle: subtitle,
-      trailing: trailing,
-      leading: leading,
-      disableTopAndBottomBorders: disableTopAndBottomBorders,
-      backgroundColor: backgroundColor,
-      initiallyExpanded: initiallyExpanded,
-      onExpansionChanged: _onSetExpansion,
-      key: _expansionKey,
-      children: contents,
-    );
+        title: title,
+        listKey: listKey,
+        subtitle: subtitle,
+        trailing: trailing,
+        leading: leading,
+        disableTopAndBottomBorders: disableTopAndBottomBorders,
+        backgroundColor: backgroundColor,
+        initiallyExpanded: initiallyExpanded,
+        onExpansionChanged: _onSetExpansion,
+        key: _expansionKey,
+        children: <Widget>[
+          Container(
+            decoration: innerDecoration,
+            child: Column(
+              children: contents,
+            ),
+          ),
+        ]);
 
     if (params.listDecoration != null) {
       expandable = Container(
@@ -214,7 +222,8 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   late Timer _expansionTimer;
 
   _startExpansionTimer() async {
-    _expansionTimer = Timer(const Duration(milliseconds: 400), _expansionCallback);
+    _expansionTimer =
+        Timer(const Duration(milliseconds: 400), _expansionCallback);
   }
 
   _stopExpansionTimer() async {
