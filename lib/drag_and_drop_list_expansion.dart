@@ -100,7 +100,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
 
     if (params.listPadding != null) {
       expandable = Padding(
-        padding: params.listPadding!,
+        padding: const EdgeInsets.all(0),
         child: expandable,
       );
     }
