@@ -206,7 +206,7 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
             textColor: _headerColor.value,
             child: ListTile(
               onTap: toggle,
-              contentPadding: EdgeInsets.zero,
+              minVerticalPadding: 0,
               leading: widget.leading,
               title: widget.title,
               subtitle: widget.subtitle,
