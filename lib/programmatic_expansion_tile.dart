@@ -204,6 +204,7 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
           ListTileTheme.merge(
             iconColor: _iconColor.value,
             textColor: _headerColor.value,
+            // title이 null이면 expansion title 부분의 listtile이 생성되지 않음
             child: widget.title != null
                 ? ListTile(
                     onTap: toggle,
