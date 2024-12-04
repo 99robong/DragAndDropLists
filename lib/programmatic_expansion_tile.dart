@@ -208,7 +208,6 @@ class ProgrammaticExpansionTileState extends State<ProgrammaticExpansionTile>
             child: widget.title != null
                 ? ListTile(
                     onTap: toggle,
-                    minVerticalPadding: 0,
                     leading: widget.leading,
                     title: widget.title,
                     subtitle: widget.subtitle,
