@@ -38,6 +38,9 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
   final bool canDrag;
 
   @override
+  final Positioned? positionedItem;
+
+  @override
   final Key? key;
 
   /// Disable to borders displayed at the top and bottom when expanded
@@ -61,6 +64,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
     this.lastTarget,
     required this.listKey,
     this.canDrag = true,
+    this.positionedItem,
     this.key,
     this.disableTopAndBottomBorders = false,
   }) {
@@ -160,6 +164,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
               height: parameters.lastItemTargetHeight,
             ),
         showDragHandle: canDrag,
+        positionedItem: positionedItem,
       ));
     } else {
       contents.add(
@@ -181,6 +186,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
                 height: parameters.lastItemTargetHeight,
               ),
           showDragHandle: canDrag,
+          positionedItem: positionedItem,
         ),
       );
     }

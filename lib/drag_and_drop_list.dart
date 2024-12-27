@@ -50,6 +50,8 @@ class DragAndDropList implements DragAndDropListInterface {
   @override
   final bool canDrag;
   @override
+  final Positioned? positionedItem;
+  @override
   final Key? key;
   DragAndDropList({
     required this.children,
@@ -64,6 +66,7 @@ class DragAndDropList implements DragAndDropListInterface {
     this.horizontalAlignment = MainAxisAlignment.start,
     this.verticalAlignment = CrossAxisAlignment.start,
     this.canDrag = true,
+    this.positionedItem,
   });
 
   @override
@@ -144,6 +147,7 @@ class DragAndDropList implements DragAndDropListInterface {
               height: parameters.lastItemTargetHeight,
             ),
         showDragHandle: canDrag,
+        positionedItem: positionedItem,
       ));
       contents.add(
         Expanded(
@@ -181,6 +185,7 @@ class DragAndDropList implements DragAndDropListInterface {
                         height: parameters.lastItemTargetHeight,
                       ),
                   showDragHandle: canDrag,
+                  positionedItem: positionedItem,
                 ),
               ],
             ),

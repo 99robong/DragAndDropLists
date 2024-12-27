@@ -1,7 +1,9 @@
-import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
-import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
+import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 
 class DragAndDropItemTarget extends StatefulWidget {
   final Widget child;
@@ -9,15 +11,17 @@ class DragAndDropItemTarget extends StatefulWidget {
   final DragAndDropBuilderParameters parameters;
   final OnItemDropOnLastTarget onReorderOrAdd;
   final bool showDragHandle; // 추가된 속성
+  final Positioned? positionedItem;
 
   const DragAndDropItemTarget({
+    Key? key,
     required this.child,
-    required this.onReorderOrAdd,
-    required this.parameters,
     this.parent,
-    required this.showDragHandle, // 기본값 설정
-    super.key,
-  });
+    required this.parameters,
+    required this.onReorderOrAdd,
+    required this.showDragHandle,
+    required this.positionedItem,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DragAndDropItemTarget();
@@ -50,16 +54,8 @@ class _DragAndDropItemTarget extends State<DragAndDropItemTarget>
           ],
         ),
         // 조건에 따라 드래그 핸들 아이콘을 표시
-        if (widget.showDragHandle)
-          Positioned(
-            right: 4, // 오른쪽 여백 조정
-            bottom: 4, // 아래쪽 여백 조정
-            child: Icon(
-              Icons.drag_handle_rounded, // 원하는 드래그 핸들 아이콘으로 변경 가능
-              color: Colors.grey, // 아이콘 색상 조정
-              size: 24, // 아이콘 크기 조정
-            ),
-          ),
+        if (widget.showDragHandle && widget.positionedItem != null)
+          widget.positionedItem as Widget,
         Positioned.fill(
           child: DragTarget<DragAndDropItem>(
             builder: (context, candidateData, rejectedData) {
