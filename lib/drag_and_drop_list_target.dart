@@ -82,8 +82,8 @@ class _DragAndDropListTarget extends State<DragAndDropListTarget>
             onWillAcceptWithDetails: (details) {
               bool accept = true;
               if (widget.parameters.listTargetOnWillAccept != null) {
-                accept =
-                    widget.parameters.listTargetOnWillAccept!(details.data, widget);
+                accept = widget.parameters.listTargetOnWillAccept!(
+                    details.data, widget);
               }
               if (accept && mounted) {
                 setState(() {

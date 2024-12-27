@@ -46,7 +46,8 @@ typedef OnItemAdd = void Function(
   int listIndex,
   int newItemIndex,
 );
-typedef OnListAdd = void Function(DragAndDropListInterface newList, int newListIndex);
+typedef OnListAdd = void Function(
+    DragAndDropListInterface newList, int newListIndex);
 typedef OnListReorder = void Function(int oldListIndex, int newListIndex);
 typedef OnListDraggingChanged = void Function(
   DragAndDropListInterface? list,
@@ -279,7 +280,7 @@ class DragAndDropLists extends StatefulWidget {
   /// the vertical axis. By default this is set to true. This may be useful to
   /// disable when setting customDragTargets
   final bool constrainDraggingAxis;
-  
+
   /// If you put a widget before DragAndDropLists there's an unexpected padding
   /// before the list renders. This is the default behaviour for ListView which
   /// is used internally. To remove the padding, set this field to true
@@ -339,9 +340,7 @@ class DragAndDropLists extends StatefulWidget {
     super.key,
   }) {
     if (listGhost == null &&
-        children
-            .whereType<DragAndDropListExpansionInterface>()
-            .isNotEmpty) {
+        children.whereType<DragAndDropListExpansionInterface>().isNotEmpty) {
       throw Exception(
           'If using DragAndDropListExpansion, you must provide a non-null listGhost');
     }
@@ -542,10 +541,11 @@ class DragAndDropListsState extends State<DragAndDropLists> {
     } else if (includeSeparators && index.isOdd) {
       return widget.listDivider!;
     } else {
+      int listIndex = (includeSeparators ? index ~/ 2 : index).toInt();
       return DragAndDropListWrapper(
-        dragAndDropList:
-            widget.children[(includeSeparators ? index / 2 : index).toInt()],
+        dragAndDropList: widget.children[listIndex],
         parameters: parameters,
+        listIndex: listIndex, // listIndex 전달
       );
     }
   }

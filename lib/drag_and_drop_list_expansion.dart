@@ -159,6 +159,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
             Container(
               height: parameters.lastItemTargetHeight,
             ),
+        showDragHandle: canDrag,
       ));
     } else {
       contents.add(
@@ -179,6 +180,7 @@ class DragAndDropListExpansion implements DragAndDropListExpansionInterface {
               Container(
                 height: parameters.lastItemTargetHeight,
               ),
+          showDragHandle: canDrag,
         ),
       );
     }

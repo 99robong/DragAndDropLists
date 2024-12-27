@@ -7,9 +7,14 @@ import 'package:flutter/material.dart';
 class DragAndDropListWrapper extends StatefulWidget {
   final DragAndDropListInterface dragAndDropList;
   final DragAndDropBuilderParameters parameters;
+  final int listIndex; // 추가된 속성
 
-  const DragAndDropListWrapper(
-      {required this.dragAndDropList, required this.parameters, super.key});
+  const DragAndDropListWrapper({
+    required this.dragAndDropList,
+    required this.parameters,
+    required this.listIndex, // 추가된 인자
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => _DragAndDropListWrapper();
@@ -24,17 +29,15 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
   Size _dragHandleSize = Size.zero;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    bool isFirstList = widget.listIndex == 0;
+    bool canDrag = !isFirstList && widget.dragAndDropList.canDrag;
+
     Widget dragAndDropListContents =
         widget.dragAndDropList.generateWidget(widget.parameters);
 
     Widget draggable;
-    if (widget.dragAndDropList.canDrag) {
+    if (canDrag) {
       if (widget.parameters.listDragHandle != null) {
         Widget dragHandle = MouseRegion(
           cursor: SystemMouseCursors.grab,
@@ -56,7 +59,6 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
                 visible: !_dragging,
                 child: dragAndDropListContents,
               ),
-              // dragAndDropListContents,
               Positioned(
                 right: widget.parameters.listDragHandle!.onLeft ? null : 0,
                 left: widget.parameters.listDragHandle!.onLeft ? 0 : null,
@@ -169,6 +171,10 @@ class _DragAndDropListWrapper extends State<DragAndDropListWrapper>
               if (widget.parameters.listOnWillAccept != null) {
                 accept = widget.parameters.listOnWillAccept!(
                     details.data, widget.dragAndDropList);
+              }
+              if (isFirstList) {
+                // 첫 번째 리스트는 드롭을 허용하지 않음
+                accept = false;
               }
               if (accept && mounted) {
                 setState(() {
